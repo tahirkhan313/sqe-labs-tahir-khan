@@ -1,17 +1,19 @@
+
+# week1/test_calculator.py
 """
 Unit tests for the calculator module.
+
 Naming conventions followed:
-- Test file: test_<module>.py
-- Test function: test_<behaviour>_<condition>()
-- One assertion per test where possible
+  - Test file: test_<module>.py
+  - Test function: test_<behaviour>_<condition>()
+  - One assertion per test where possible (single responsibility)
 """
-
 import pytest
-from calculator import add, subtract, multiply, divide, power, is_even
+from Calculator import add, subtract, multiply, divide, power, is_even
 
 
-# ─── Tests for add()
-
+# ─── Tests for add() ──────────────────────────────────────────────────────────
+@pytest.mark.arithmetic
 def test_add_two_positive_integers():
     """Adding two positive numbers gives their sum."""
     assert add(2, 3) == 5
@@ -28,11 +30,11 @@ def test_add_two_floats():
 
 
 def test_add_zero():
-    """Adding zero returns the other operand."""
+    """Adding zero is the identity operation — result equals the other operand."""
     assert add(7, 0) == 7
 
 
-# ─── Tests for subtract()
+# ─── Tests for subtract() ─────────────────────────────────────────────────────
 
 def test_subtract_positive_result():
     """Subtracting a smaller number gives a positive result."""
@@ -44,7 +46,7 @@ def test_subtract_negative_result():
     assert subtract(3, 10) == -7
 
 
-# ─── Tests for multiply()
+# ─── Tests for multiply() ─────────────────────────────────────────────────────
 
 def test_multiply_two_integers():
     assert multiply(4, 5) == 20
@@ -60,7 +62,7 @@ def test_multiply_negative_numbers():
     assert multiply(-3, -4) == 12
 
 
-# ─── Tests for divide()
+# ─── Tests for divide() ───────────────────────────────────────────────────────
 
 def test_divide_even_division():
     assert divide(10, 2) == 5.0
@@ -69,14 +71,15 @@ def test_divide_even_division():
 def test_divide_float_result():
     assert divide(7, 2) == 3.5
 
-
+@pytest.mark.arithmetic
+@pytest.mark.edge_case
 def test_divide_by_zero_raises_value_error():
     """Dividing by zero must raise ValueError."""
-    with pytest.raises(ValueError, match="Cannot divide by zero"):
+    with pytest.raises(ValueError, match='Cannot divide by zero'):
         divide(10, 0)
 
 
-# ─── Tests for power()
+# ─── Tests for power() ───────────────────────────────────────────────────────
 
 def test_power_positive_exponent():
     assert power(2, 8) == 256
@@ -87,7 +90,7 @@ def test_power_zero_exponent():
     assert power(99, 0) == 1
 
 
-# ─── Tests for is_even()
+# ─── Tests for is_even() ──────────────────────────────────────────────────────
 
 def test_is_even_with_even_number():
     assert is_even(4) is True
@@ -98,15 +101,5 @@ def test_is_even_with_odd_number():
 
 
 def test_is_even_with_zero():
-    """Zero is an even number."""
+    """Zero is defined as an even number."""
     assert is_even(0) is True
-
-@pytest.mark.arithmetic
-def test_add_two_positive_integers():
- assert add(2, 3) == 5
-@pytest.mark.arithmetic
-@pytest.mark.edge_case
-
-def test_divide_by_zero_raises_value_error():
- with pytest.raises(ValueError):
-     divide(10, 0)
