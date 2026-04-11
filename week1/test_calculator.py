@@ -100,3 +100,13 @@ def test_is_even_with_odd_number():
 def test_is_even_with_zero():
     """Zero is an even number."""
     assert is_even(0) is True
+
+@pytest.mark.arithmetic
+def test_add_two_positive_integers():
+ assert add(2, 3) == 5
+@pytest.mark.arithmetic
+@pytest.mark.edge_case
+
+def test_divide_by_zero_raises_value_error():
+ with pytest.raises(ValueError):
+     divide(10, 0)
